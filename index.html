@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<!--
+  index.html = the structure of your website.
+  HTML defines WHAT is on the page (text, links, buttons).
+  CSS (css/style.css) controls how it looks.
+  JavaScript (js/script.js) controls how it behaves.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Vidi Septian Hadiwibowo — Aspiring Web Developer</title>
+  <meta
+    name="description"
+    content="Personal portfolio of Vidi Septian Hadiwibowo, an aspiring web developer. Projects, skills, and contact information."
+  />
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!--
+    Loaded in the <head> without "defer" on purpose:
+    it runs BEFORE the page is painted, so the saved dark mode
+    is applied instantly (no white flash on reload).
+  -->
+  <script src="js/script.js"></script>
+</head>
+
+<body>
+  <!-- ============================================================
+       HEADER: logo + navigation + GitHub + dark mode
+       ============================================================ -->
+  <header class="site-header">
+    <nav class="nav" aria-label="Main navigation">
+
+      <a href="#hero" class="logo">Vidi<span>.</span></a>
+
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <!-- Icon buttons live together on the right -->
+      <div class="nav-actions">
+
+        <!-- GitHub icon button -->
+        <a
+          class="icon-link"
+          href="https://github.com/VidiWebDev"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="My GitHub profile (opens in a new tab)"
+        >
+          <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+        </a>
+
+        <!-- Dark mode button. JavaScript updates icon + label. -->
+        <button
+          id="theme-toggle"
+          class="theme-toggle"
+          type="button"
+          aria-label="Switch to dark mode"
+        >
+          🌙
+        </button>
+
+      </div>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ==========================================================
+         HERO
+         ========================================================== -->
+    <section id="hero" class="hero">
+      <div class="container hero-inner">
+
+        <div class="hero-copy">
+          <p class="hero-badge">
+            <span class="status-dot" aria-hidden="true"></span>
+            Open to learning opportunities
+          </p>
+
+          <h1 class="hero-title">
+            Vidi Septian <span class="highlight">Hadiwibowo</span>
+          </h1>
+          <p class="hero-role">An Aspiring Web Developer</p>
+
+          <p class="hero-description">
+            I'm a student who loves turning ideas into simple, clean websites.
+            Right now I'm learning HTML, CSS, and JavaScript — and building
+            this portfolio one step at a time.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">See My Work</a>
+            <a href="#contact" class="btn btn-secondary">Contact Me</a>
+            <a
+              href="https://github.com/VidiWebDev"
+              class="btn btn-ghost"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <!-- Small GitHub logo inside the button -->
+              <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+              </svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+
+        <!-- Decorative code card (hidden from screen readers) -->
+        <div class="hero-card" aria-hidden="true">
+          <div class="hero-card-bar">
+            <span></span><span></span><span></span>
+          </div>
+          <pre class="hero-code"><code><span class="token-keyword">const</span> developer = {
+  name: <span class="token-string">"Vidi"</span>,
+  role: <span class="token-string">"Frontend Learner"</span>,
+  stack: [<span class="token-string">"HTML"</span>, <span class="token-string">"CSS"</span>, <span class="token-string">"JavaScript"</span>],
+  learning: <span class="token-boolean">true</span>
+};</code></pre>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         ABOUT
+         ========================================================== -->
+    <section id="about" class="section">
+      <div class="container about-grid">
+
+        <div class="about-visual" data-reveal>
+          <div class="avatar" aria-hidden="true">VH</div>
+        </div>
+
+        <div class="about-content" data-reveal>
+          <p class="section-eyebrow">About me</p>
+          <h2 class="section-title">A student learning to build for the web</h2>
+
+          <p>
+            I'm Vidi, a student from Indonesia who started learning web
+            development because I enjoy turning ideas into something people
+            can actually use. What began with simple HTML pages has grown
+            into a real interest in frontend development.
+          </p>
+
+          <p>
+            Right now I'm focusing on the fundamentals: writing clean HTML,
+            building responsive layouts with CSS, and adding interactivity
+            with JavaScript. My goal is to keep improving while preparing
+            for university admissions and future internships.
+          </p>
+
+          <ul class="facts-list">
+            <li>
+              <span class="fact-label">Status</span>
+              <span>Student &amp; self-taught learner</span>
+            </li>
+            <li>
+              <span class="fact-label">Focus</span>
+              <span>Frontend development</span>
+            </li>
+            <li>
+              <span class="fact-label">Learning</span>
+              <span>JavaScript &amp; Git</span>
+            </li>
+            <li>
+              <span class="fact-label">Goal</span>
+              <span>University &amp; internship preparation</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         SKILLS
+         ========================================================== -->
+    <section id="skills" class="section">
+      <div class="container">
+        <div class="section-header" data-reveal>
+          <p class="section-eyebrow">Skills &amp; tools</p>
+          <h2 class="section-title">What I'm learning right now</h2>
+          <p class="section-lead">
+            These are the tools I use to build my projects. I'm honest about
+            my level: I'm still learning, and improving with every project.
+          </p>
+        </div>
+
+        <div class="skills-grid">
+
+          <article class="skill-card" data-reveal>
+            <h3 class="skill-name">HTML5</h3>
+            <p class="skill-note">
+              Semantic structure, forms, and accessible markup.
+            </p>
+            <span class="skill-level">Comfortable</span>
+          </article>
+
+          <article class="skill-card" data-reveal>
+            <h3 class="skill-name">CSS3</h3>
+            <p class="skill-note">
+              Responsive layouts with Flexbox, Grid, and CSS variables.
+            </p>
+            <span class="skill-level">Comfortable</span>
+          </article>
+
+          <article class="skill-card" data-reveal>
+            <h3 class="skill-name">JavaScript</h3>
+            <p class="skill-note">
+              DOM manipulation, events, and small interactive features.
+            </p>
+            <span class="skill-level">Learning</span>
+          </article>
+
+          <article class="skill-card" data-reveal>
+            <h3 class="skill-name">Git &amp; GitHub</h3>
+            <p class="skill-note">
+              Version control and publishing projects online.
+            </p>
+            <span class="skill-level">Learning</span>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         PROJECTS
+         ========================================================== -->
+    <section id="projects" class="section">
+      <div class="container">
+        <div class="section-header" data-reveal>
+          <p class="section-eyebrow">Projects</p>
+          <h2 class="section-title">Things I've built</h2>
+          <p class="section-lead">
+            Small projects where I practise what I learn. More will be added
+            as I keep studying.
+          </p>
+        </div>
+
+        <div class="projects-grid">
+
+          <article class="project-card" data-reveal>
+            <div class="project-thumb"><span>01</span></div>
+            <div class="project-body">
+              <h3 class="project-title">Personal Portfolio</h3>
+              <p class="project-desc">
+                A responsive single-page portfolio with a dark mode toggle,
+                built from scratch without any framework.
+              </p>
+
+              <ul class="project-tags">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+              </ul>
+
+              <a
+                class="project-link"
+                href="https://github.com/VidiWebDev"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                More on GitHub →
+              </a>
+            </div>
+          </article>
+
+          <article class="project-card project-card--soon" data-reveal>
+            <div class="project-body project-body--center">
+              <p class="project-kicker">Coming soon</p>
+              <h3 class="project-title">Exciting project coming soon!</h3>
+              <p class="project-desc">
+                I'm working on my first JavaScript app. This space will be
+                updated when it's ready.
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         CONTACT
+         ========================================================== -->
+    <section id="contact" class="section">
+      <div class="container">
+        <div class="contact-inner" data-reveal>
+          <p class="section-eyebrow">Contact</p>
+          <h2 class="section-title">Let's build something together</h2>
+          <p class="section-lead">
+            I'm open to learning opportunities, feedback, and small
+            collaborations. The fastest way to reach me is by email.
+          </p>
+
+          <div class="contact-actions">
+            <!-- Opens Gmail's compose window directly in a new tab -->
+            <a
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=vidi.septian13@gmail.com"
+              class="btn btn-primary"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Email Me
+            </a>
+
+            <a
+              href="https://github.com/VidiWebDev"
+              class="btn btn-secondary"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+              </svg>
+              GitHub Profile
+            </a>
+          </div>
+
+          <!-- Fallback for visitors who use Outlook, Apple Mail, etc. -->
+          <p class="contact-note">
+            Prefer your own email app?
+            <a href="mailto:vidi.septian13@gmail.com">vidi.septian13@gmail.com</a>
+          </p>
+
+          <ul class="social-list">
+            <li>
+              <a
+                href="https://github.com/VidiWebDev"
+                target="_blank"
+                rel="noopener noreferrer"
+              >GitHub ↗</a>
+            </li>
+            <!-- TODO: replace with your real LinkedIn profile -->
+            <li><a href="#">LinkedIn ↗</a></li>
+            <li>
+              <a
+                href="https://www.instagram.com/vditian_/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >Instagram ↗</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year">2026</span> Vidi Septian Hadiwibowo</p>
+      <a href="#hero" class="back-to-top">Back to top ↑</a>
+    </div>
+  </footer>
+</body>
+</html>

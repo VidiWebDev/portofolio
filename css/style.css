@@ -1,0 +1,1014 @@
+/* ============================================================
+   style.css — all visual styling for the portfolio
+
+   Table of contents
+   1. Design tokens (colors, fonts, spacing)
+   2. Base styles (reset + background glow)
+   3. Reusable helpers (.container, .btn, .section)
+   4. Header & navigation
+   5. Hero (with decorative code card)
+   6. About
+   7. Skills
+   8. Projects
+   9. Contact & footer
+   10. Scroll-reveal animation
+   11. Responsive tweaks (tablet + mobile)
+   12. Accessibility (reduced motion)
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. DESIGN TOKENS
+   Every color is defined ONCE here, then reused via var(--name).
+   Dark mode swaps the values below — no duplicate rules needed.
+   ------------------------------------------------------------ */
+:root {
+  /* Light mode palette (from prd.md) */
+  --bg: #f8f9fa;
+  --surface: #ffffff;
+  --text: #212529;
+  --text-muted: #5c636a;
+  --accent: #3b82f6;
+  --accent-2: #60a5fa;        /* second accent, used in gradients */
+  --accent-contrast: #ffffff;
+  --border: #e5e7eb;
+  --glow: rgba(59, 130, 246, 0.1);
+  --code-string: #15803d;     /* green for strings inside code */
+
+  color-scheme: light;
+
+  /* Typography */
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+
+  /* Layout */
+  --container-width: 1100px;
+  --radius: 10px;
+
+  /* Motion */
+  --transition: 180ms ease;
+}
+
+[data-theme="dark"] {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent: #38bdf8;
+  --accent-2: #7dd3fc;
+  --accent-contrast: #0f172a;
+  --border: #334155;
+  --glow: rgba(56, 189, 248, 0.12);
+  --code-string: #4ade80;
+
+  color-scheme: dark;
+}
+
+/* ------------------------------------------------------------
+   2. BASE STYLES
+   ------------------------------------------------------------ */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text);
+
+  /* Soft colored light in two corners — makes the page feel less flat */
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(700px circle at 92% 0%, var(--glow), transparent 65%),
+    radial-gradient(600px circle at 0% 100%, var(--glow), transparent 65%);
+  background-attachment: fixed;
+
+  -webkit-font-smoothing: antialiased;
+  transition: background-color var(--transition), color var(--transition);
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+section[id] {
+  scroll-margin-top: 7rem;
+}
+
+/* ------------------------------------------------------------
+   3. REUSABLE HELPERS
+   ------------------------------------------------------------ */
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+.section {
+  padding: clamp(3.5rem, 8vw, 6rem) 0;
+  border-top: 1px solid var(--border);
+  transition: border-color var(--transition);
+}
+
+/* Small label with a decorative line before it */
+.section-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.section-eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+
+.section-title {
+  margin-bottom: 1rem;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.section-lead {
+  max-width: 60ch;
+  color: var(--text-muted);
+}
+
+.section-header {
+  max-width: 620px;
+  margin-bottom: 2.5rem;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.6rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: transform var(--transition),
+              background-color var(--transition),
+              border-color var(--transition),
+              color var(--transition);
+}
+
+.btn svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background-color: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+}
+
+.btn-secondary {
+  background-color: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.btn-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Text-only button (used for GitHub in the hero) */
+.btn-ghost {
+  color: var(--text-muted);
+}
+
+.btn-ghost:hover {
+  color: var(--accent);
+}
+
+/* ------------------------------------------------------------
+   4. HEADER & NAVIGATION
+   ------------------------------------------------------------ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: var(--bg);
+  border-bottom: 1px solid var(--border);
+  transition: background-color var(--transition),
+              border-color var(--transition),
+              box-shadow var(--transition);
+}
+
+/* JS adds this class after scrolling — a subtle shadow appears */
+.site-header.is-scrolled {
+  box-shadow: 0 10px 30px -20px rgba(0, 0, 0, 0.45);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding: 0.9rem 1.5rem;
+}
+
+.logo {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.logo span {
+  color: var(--accent);
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: color var(--transition);
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+}
+
+/* GitHub icon + theme toggle sit side by side */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.icon-link,
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background-color: var(--surface);
+  transition: transform var(--transition),
+              border-color var(--transition),
+              color var(--transition),
+              background-color var(--transition);
+}
+
+.icon-link {
+  color: var(--text-muted);
+}
+
+.icon-link svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.theme-toggle {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.icon-link:hover,
+.theme-toggle:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.icon-link:hover {
+  color: var(--accent);
+}
+
+/* ------------------------------------------------------------
+   5. HERO
+   Two columns on desktop: text on the left, code card on the right.
+   ------------------------------------------------------------ */
+.hero {
+  padding: clamp(3.5rem, 9vw, 6.5rem) 0;
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(2rem, 6vw, 4rem);
+  align-items: center;
+}
+
+/* Staggered entrance animation for each line of text */
+.hero-copy > * {
+  animation: fade-up 0.6s ease both;
+}
+
+.hero-copy > :nth-child(1) { animation-delay: 0.05s; }
+.hero-copy > :nth-child(2) { animation-delay: 0.12s; }
+.hero-copy > :nth-child(3) { animation-delay: 0.19s; }
+.hero-copy > :nth-child(4) { animation-delay: 0.26s; }
+.hero-copy > :nth-child(5) { animation-delay: 0.33s; }
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 1.25rem;
+  padding: 0.4rem 0.9rem;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: #22c55e;
+  animation: pulse 2s ease-out infinite;
+}
+
+.hero-title {
+  margin-bottom: 0.75rem;
+  font-size: clamp(2.4rem, 5.6vw, 4rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+/* Gradient text on the last name */
+.highlight {
+  background: linear-gradient(120deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-role {
+  margin-bottom: 1.25rem;
+  color: var(--text-muted);
+  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+  font-weight: 600;
+}
+
+.hero-description {
+  max-width: 38rem;
+  margin-bottom: 2rem;
+  color: var(--text-muted);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* --- decorative code card --- */
+.hero-card {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 30px 60px -30px rgba(2, 6, 23, 0.5);
+  animation: fade-in 0.8s 0.3s ease both;
+  transition: border-color var(--transition),
+              background-color var(--transition);
+}
+
+.hero-card::after {
+  content: "";
+  position: absolute;
+  right: -30%;
+  bottom: -40%;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--glow), transparent 70%);
+  pointer-events: none;
+}
+
+.hero-card-bar {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.8rem 1rem;
+  background-color: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-card-bar span {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+}
+
+.hero-card-bar span:nth-child(1) { background-color: #ef4444; }
+.hero-card-bar span:nth-child(2) { background-color: #f59e0b; }
+.hero-card-bar span:nth-child(3) { background-color: #22c55e; }
+
+.hero-code {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 1.35rem 1.25rem;
+  overflow-x: auto;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: clamp(0.78rem, 1.2vw, 0.88rem);
+  line-height: 1.85;
+}
+
+.hero-code code {
+  font-family: inherit;
+}
+
+.token-keyword,
+.token-boolean {
+  color: var(--accent);
+}
+
+.token-keyword {
+  font-weight: 600;
+}
+
+.token-string {
+  color: var(--code-string);
+}
+
+/* Tilt only on desktop, where there is room for it */
+@media (min-width: 861px) {
+  .hero-card {
+    transform: rotate(1.2deg);
+  }
+
+  .hero-card:hover {
+    transform: rotate(0deg) translateY(-4px);
+  }
+}
+
+/* ------------------------------------------------------------
+   6. ABOUT
+   ------------------------------------------------------------ */
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 300px) 1fr;
+  gap: clamp(2rem, 6vw, 4rem);
+  align-items: center;
+}
+
+.about-visual {
+  display: flex;
+  justify-content: center;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 1;
+  border: 6px solid var(--surface);
+  border-radius: 32px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: var(--accent-contrast);
+  font-size: clamp(3rem, 7vw, 4.5rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  box-shadow: 0 30px 60px -30px var(--accent);
+}
+
+.about-content p {
+  color: var(--text-muted);
+}
+
+.about-content p + p {
+  margin-top: 1rem;
+}
+
+.facts-list {
+  display: grid;
+  gap: 0.65rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.facts-list li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 1rem;
+  padding: 0.8rem 1rem;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  transition: background-color var(--transition),
+              border-color var(--transition);
+}
+
+.fact-label {
+  min-width: 5.5rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------
+   7. SKILLS
+   ------------------------------------------------------------ */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.skill-card {
+  position: relative;
+  overflow: hidden;
+  padding: 1.5rem;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: transform var(--transition),
+              border-color var(--transition),
+              background-color var(--transition);
+}
+
+/* Accent line that slides in from the left on hover */
+.skill-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.skill-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+}
+
+.skill-card:hover::before {
+  transform: scaleX(1);
+}
+
+.skill-name {
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.skill-note {
+  color: var(--text-muted);
+  font-size: 0.925rem;
+}
+
+.skill-level {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.15rem 0.65rem;
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------
+   8. PROJECTS
+   ------------------------------------------------------------ */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: transform var(--transition),
+              border-color var(--transition),
+              box-shadow var(--transition),
+              background-color var(--transition);
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 18px 40px -22px rgba(0, 0, 0, 0.45);
+}
+
+/* Decorative "screenshot" area until you have real images */
+.project-thumb {
+  display: grid;
+  place-items: center;
+  height: 150px;
+  background:
+    radial-gradient(160px circle at 20% 20%, var(--glow), transparent 70%),
+    linear-gradient(135deg, var(--bg), var(--surface));
+  border-bottom: 1px solid var(--border);
+  color: var(--accent);
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.project-thumb span {
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover .project-thumb span {
+  transform: scale(1.12);
+}
+
+.project-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1.5rem;
+}
+
+.project-title {
+  margin-bottom: 0.5rem;
+  font-size: 1.15rem;
+}
+
+.project-desc {
+  color: var(--text-muted);
+  font-size: 0.925rem;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0 1.25rem;
+  padding: 0;
+  list-style: none;
+}
+
+.project-tags li {
+  padding: 0.2rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.project-link {
+  margin-top: auto;
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.project-link:hover {
+  text-decoration: underline;
+}
+
+.project-card--soon {
+  background-color: transparent;
+  border: 2px dashed var(--border);
+}
+
+.project-body--center {
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+}
+
+.project-kicker {
+  margin-bottom: 0.5rem;
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------
+   9. CONTACT & FOOTER
+   ------------------------------------------------------------ */
+/* The contact block is a card with a soft glow in the corner */
+.contact-inner {
+  position: relative;
+  overflow: hidden;
+  max-width: 780px;
+  margin-inline: auto;
+  padding: clamp(2rem, 5vw, 3.5rem);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 30px 60px -40px rgba(2, 6, 23, 0.5);
+}
+
+.contact-inner::before {
+  content: "";
+  position: absolute;
+  top: -120px;
+  right: -80px;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--glow), transparent 70%);
+  pointer-events: none;
+}
+
+.contact-inner .section-eyebrow {
+  justify-content: center;
+}
+
+.contact-inner .section-lead {
+  margin-inline: auto;
+}
+
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.85rem;
+  margin-top: 2rem;
+}
+
+.contact-note {
+  margin-top: 1rem;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.contact-note a {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.contact-note a:hover {
+  text-decoration: underline;
+}
+
+.social-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 2.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.social-list a {
+  color: var(--text-muted);
+  font-size: 0.925rem;
+  font-weight: 600;
+  border-bottom: 1px solid transparent;
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.social-list a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 1.75rem 0;
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.footer-inner p {
+  margin: 0;
+}
+
+.back-to-top {
+  color: var(--text-muted);
+  font-weight: 600;
+  transition: color var(--transition);
+}
+
+.back-to-top:hover {
+  color: var(--accent);
+}
+
+/* ------------------------------------------------------------
+   10. SCROLL-REVEAL
+   Elements with data-reveal start invisible and slide up when
+   they enter the screen (script.js handles the class change).
+   The ".js" gate means: if JavaScript fails, content stays visible.
+   ------------------------------------------------------------ */
+html.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+html.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Small stagger so grid items do not appear all at once */
+.skills-grid [data-reveal]:nth-child(2) { transition-delay: 70ms; }
+.skills-grid [data-reveal]:nth-child(3) { transition-delay: 140ms; }
+.skills-grid [data-reveal]:nth-child(4) { transition-delay: 210ms; }
+
+.projects-grid [data-reveal]:nth-child(2) { transition-delay: 90ms; }
+
+/* ------------------------------------------------------------
+   11. RESPONSIVE TWEAKS
+   ------------------------------------------------------------ */
+
+/* Tablets: single column hero and about */
+@media (max-width: 860px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-card {
+    max-width: 520px;
+    width: 100%;
+    margin-inline: auto;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .avatar {
+    max-width: 220px;
+  }
+}
+
+/* Phones */
+@media (max-width: 640px) {
+  .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    gap: 1.25rem;
+    padding-top: 0.35rem;
+  }
+
+  .nav-links a {
+    font-size: 0.875rem;
+  }
+
+  .hero {
+    padding: 3rem 0 4rem;
+  }
+
+  .social-list {
+    gap: 1.25rem;
+  }
+
+  .footer-inner {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+/* Very small phones: full-width buttons are easier to tap */
+@media (max-width: 480px) {
+  .hero-actions,
+  .contact-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-actions .btn,
+  .contact-actions .btn {
+    width: 100%;
+  }
+
+  .hero-badge {
+    font-size: 0.75rem;
+  }
+}
+
+/* ------------------------------------------------------------
+   12. ACCESSIBILITY
+   ------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+
+  /* Never leave revealed content hidden for these users */
+  html.js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ------------------------------------------------------------
+   KEYFRAMES
+   ------------------------------------------------------------ */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+  }
+}
