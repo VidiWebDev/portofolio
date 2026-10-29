@@ -42,7 +42,6 @@ portofolio/
 │   └── style.css       # design tokens, layout, responsive rules
 ├── js/
 │   └── script.js       # theme toggle, scroll reveal, header shadow
-├── prd.md              # product requirements and roadmap
 └── README.md
 ```
 
