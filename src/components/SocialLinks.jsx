@@ -24,9 +24,9 @@ const socialLinks = [
   {
     name: "Instagram",
     displayName: "Instagram",
-    subText: "@ekizr_",
+    subText: "@vditian_",
     icon: Instagram,
-    url: "https://www.instagram.com/ekizr_/?hl=id",
+    url: "https://www.instagram.com/vditian_/",
     color: "#E4405F",
     gradient: "from-[#833AB4] via-[#E4405F] to-[#FCAF45]",
   },
@@ -42,9 +42,9 @@ const socialLinks = [
   {
     name: "GitHub",
     displayName: "Github",
-    subText: "@EkiZR",
+    subText: "@VidiWebDev",
     icon: Github,
-    url: "https://github.com/EkiZR",
+    url: "https://github.com/VidiWebDev",
     color: "#ffffff",
     gradient: "from-[#333] to-[#24292e]",
   },
@@ -113,7 +113,7 @@ const SocialLinks = () => {
         className="text-xl font-semibold text-white mb-6 flex items-center gap-2"
         data-aos="fade-down" 
       >
-        <span className="inline-block w-8 h-1 bg-indigo-500 rounded-full"></span>
+        <span className="inline-block w-8 h-1 bg-orange-500 rounded-full"></span>
         Connect With Me
       </h3>
 
